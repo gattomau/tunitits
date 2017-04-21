@@ -17,8 +17,8 @@ $db = new db();
 
 $usr->initUsers();
 
-$useradd = $db->dbReady()->prepare("INSERT INTO utenti (Nome, Cognome, dataNascita, luogoNascita, Email, Cellulare, Club, Distretto, incarichiClub, incarichiDist, incarichiMDist, Delegato, Pacchetto, Pernottamento, Gite, mezzoTrasporto, orarioPartenza, orarioArrivo, Allergie, Note, impPagato, cro)
-VALUES (:nome, :cognome, :dataNascita, :luogoNascita, :email, :cellulare, :club, :distretto, :incaricoClub, :incaricoDist, :incaricoMDist, :delegato, :pacchetto, :pernottamento, :gite, :mezzotrasporto, :orariopartenza, :orarioarrivo, :allergie, :note, :imppagato, :cro)");
+$useradd = $db->dbReady()->prepare("INSERT INTO utenti (Nome, Cognome, dataNascita, luogoNascita, Email, Cellulare, Club, Distretto, incarichiClub, incarichiDist, incarichiMDist, Delegato, Pacchetto, Pernottamento, Gite, mezzoTrasporto, numTreno, orarioPartenza, orarioArrivo, Allergie, Note, impPagato, cro)
+VALUES (:nome, :cognome, :dataNascita, :luogoNascita, :email, :cellulare, :club, :distretto, :incaricoClub, :incaricoDist, :incaricoMDist, :delegato, :pacchetto, :pernottamento, :gite, :mezzotrasporto, :numTreno, :orariopartenza, :orarioarrivo, :allergie, :note, :imppagato, :cro)");
 
 $useradd->bindParam(':nome', $nome);
 $useradd->bindParam(':cognome', $cognome);
@@ -36,6 +36,7 @@ $useradd->bindParam(':pacchetto', $pacchetto);
 $useradd->bindParam(':pernottamento', $pernottamento);
 $useradd->bindParam(':gite', $gite);
 $useradd->bindParam(':mezzotrasporto', $mezzotrasporto);
+$useradd->bindParam(':numTreno', $numTreno);
 $useradd->bindParam(':orariopartenza', $orariopartenza);
 $useradd->bindParam(':orarioarrivo', $orarioarrivo);
 $useradd->bindParam(':allergie', $allergie);
@@ -59,8 +60,9 @@ $pacchetto = (!empty($_POST['pacchetto'])) ? $_POST['pacchetto'] : NULL;
 $pernottamento = (!empty($_POST['pernottamento'])) ? $_POST['pernottamento'] : NULL;
 $gite = (!empty($_POST['gite'])) ? $_POST['gite'] : NULL;
 $mezzotrasporto = (!empty($_POST['mezzotrasporto'])) ? $_POST['mezzotrasporto'] : NULL;
-$orariopartenza = (!empty($_POST['orariopartenza'])) ? $_POST['orariopartenza'] : '00:00:00';
-$orarioarrivo = (!empty($_POST['orarioarrivo'])) ? $_POST['orarioarrivo'] : '00:00:00';
+$numTreno = (!empty($_POST['numTreno'])) ? $_POST['numTreno'] : NULL;
+$orariopartenza = (!empty($_POST['orariopartenza'])) ? $_POST['orariopartenza'] : NULL;
+$orarioarrivo = (!empty($_POST['orarioarrivo'])) ? $_POST['orarioarrivo'] : NULL;
 $allergie = (!empty($_POST['allergie'])) ? $_POST['allergie'] : NULL;
 $note = (!empty($_POST['note'])) ? $_POST['note'] : NULL;
 $imppagato = (!empty($_POST['pacchetto'])) ? $_POST['pacchetto'] : NULL;
@@ -77,11 +79,11 @@ if(isset($_POST['send'])) {
     <form class="" action="addUsers.php" method="post">
       <div class="form-group">
         <label for="nome">Nome</label>
-        <input class="form-control" type="text" name="nome" value="" placeholder="nome" required>
+        <input class="form-control" type="text" name="nome" value="" placeholder="nome">
       </div>
       <div class="form-group">
         <label for="cognome">Cognome</label>
-        <input class="form-control" type="text" name="cognome" value="" placeholder="cognome" required>
+        <input class="form-control" type="text" name="cognome" value="" placeholder="cognome">
       </div>
       <div class="input-group date" id="pickdata1">
         <label for="dataNascita">Data di Nascita</label>
@@ -96,19 +98,19 @@ if(isset($_POST['send'])) {
       </div>
       <div class="form-group">
         <label for="email">E-Mail</label>
-        <input class="form-control" type="email" name="email" value="" placeholder="email" required>
+        <input class="form-control" type="email" name="email" value="" placeholder="email">
       </div>
       <div class="form-group">
         <label for="cellulare">Nr. Cellulare</label>
-        <input class="form-control" type="text" name="cellulare" value="" placeholder="cellulare" required>
+        <input class="form-control" type="text" name="cellulare" value="" placeholder="cellulare">
       </div>
       <div class="form-group">
         <label for="club">Club</label>
-        <input class="form-control" type="text" name="club" value="" placeholder="club" required>
+        <input class="form-control" type="text" name="club" value="" placeholder="club">
       </div>
       <div class="">
         <label for="distretto">Distretto</label>
-        <input class="form-control" type="text" name="distretto" value="" placeholder="distretto" required>
+        <input class="form-control" type="text" name="distretto" value="" placeholder="distretto">
       </div>
       <div class="form-group">
         <label for="incaricoClub">Incarichi di Club</label>
@@ -124,14 +126,14 @@ if(isset($_POST['send'])) {
       </div>
       <div class="form-group">
         <label for="delegato">Delegato</label>
-        <select class="form-control" name="delegato" required>
+        <select class="form-control" name="delegato">
           <option value="1">Si</option>
           <option value="0" selected>No</option>
         </select>
       </div>
       <div class="form-group">
         <label for="pacchetto"></label>
-        <select class="form-control" name="pacchetto" required>
+        <select class="form-control" name="pacchetto">
           <option value="" selected>---</option>
           <option value="1">Pacchetto Full (E. 120,00)</option>
           <option value="2">Pacchetto Middle (E. 100,00)</option>
@@ -141,7 +143,7 @@ if(isset($_POST['send'])) {
       </div>
       <div class="form-group">
         <label for="pernottamento">Pernottamento</label>
-        <select class="form-control" name="pernottamento" required>
+        <select class="form-control" name="pernottamento">
           <option value="" selected>---</option>
           <option value="1">Camera Singola (E. +30,00)</option>
           <option value="2">Camera Doppia</option>
@@ -158,6 +160,10 @@ if(isset($_POST['send'])) {
       <div class="form-group">
         <label for="mezzotrasporto">Mezzo di Trasporto</label>
         <input class="form-control" type="text" name="mezzotrasporto" value="" placeholder="mezzotrasporto">
+      </div>
+      <div class="form-group">
+        <label for="numTreno">Numero del Treno</label>
+        <input class="form-control" type="text" name="numTreno" value="" placeholder="numTreno">
       </div>
       <div class="form-group">
         <label for="orariopartenza">Orario di Partenza</label>
@@ -177,11 +183,11 @@ if(isset($_POST['send'])) {
       </div>
       <div class="form-group">
         <label for="imppagato">Importo Pagato</label>
-        <input class="form-control" type="text" name="imppagato" value="" placeholder="imppagato" required>
+        <input class="form-control" type="text" name="imppagato" value="" placeholder="imppagato">
       </div>
       <div class="form-group">
         <label for="cro">C.R.O.</label>
-        <input class="form-control" type="text" name="cro" value="" placeholder="cro" required>
+        <input class="form-control" type="text" name="cro" value="" placeholder="cro">
       </div>
       <input class="form-control btn-danger" type="submit" name="send" value="Invia Prenotazione">
     </form>
