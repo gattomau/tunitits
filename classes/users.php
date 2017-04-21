@@ -39,15 +39,5 @@ class users
             $db->dbReady()->query($sql);
 
   }
-
-  public function addUser($nome, $cognome, $datanascita, $luogonascita, $email, $cellulare, $club, $distretto, $incarichiclub, $incarichidist, $incarichimdist, $delegato, $pacchetto, $pernottamento, $gite, $mezzotrasporto, $orariopartenza, $orarioarrivo, $allergie, $note, $imppagato, $cro) {
-
-    $db = new db();
-
-    $useradd = "INSERT INTO utenti (Nome, Cognome, dataNascita, luogoNascita, Email, Cellulare, Club, Distretto, incarichiClub, incarichiDist, incarichiMDist, Delegato, Pacchetto, Pernottamento, Gite, mezzoTrasporto, orarioPartenza, orarioArrivo, Allergie, Note, impPagato, cro)
-    VALUES ('$nome', '$cognome', '$datanascita', '$luogonascita', '$email', '$cellulare', '$club', '$distretto', '$incarichiclub', '$incarichidist', '$incarichimdist', '$delegato', '$pacchetto', '$pernottamento', '$gite', '$mezzotrasporto', '$orariopartenza', '$orarioarrivo', '$allergie', '$note', '$imppagato', '$cro')";
-
-    $db->dbReady()->query($useradd);
-  }
-
+  
 }
