@@ -30,11 +30,11 @@ include 'functions.php';
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Home</a></li>
+        <li><a href="index.php">Home</a></li>
         <li><a href="addUsers.php">Prenota</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">Admin</a></li>
+        <li><a href="admin">Admin</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
