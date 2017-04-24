@@ -85,12 +85,14 @@ if(isset($_POST['send'])) {
         <label for="cognome">Cognome</label>
         <input class="form-control" type="text" name="cognome" value="" placeholder="cognome">
       </div>
-      <div class="input-group date" id="pickdata1">
-        <label for="dataNascita">Data di Nascita</label>
-        <input class="form-control" type="text" name="dataNascita" value="" placeholder="dataNascita">
-        <span class="input-group-addon">
-            <span class="glyphicon glyphicon-calendar"></span>
-        </span>
+        <div class="form-group">
+          <div class="input-group date" id="pickdata1">
+            <label for="dataNascita">Data di Nascita</label>
+            <input class="form-control" type="text" name="dataNascita" value="" placeholder="dataNascita">
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+        </div>
       </div>
       <div class="form-group">
         <label for="luogoNascita">Luogo di Nascita</label>

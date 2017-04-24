@@ -2,6 +2,9 @@
 
 use classes\db;
 use classes\users;
+use Curl\Curl;
+
+include 'vendor/autoload.php';
 
 include 'autoload.php';
 
@@ -75,9 +78,40 @@ $users = new users();
         <td style="padding: 15px; border: 1px solid #000;"><?php echo $user['Note'] ?></td>
         <td style="padding: 15px; border: 1px solid #000;"><?php echo $user['impPagato'] ?></td>
         <td style="padding: 15px; border: 1px solid #000;"><?php echo $user['cro'] ?></td>
+        <?php
+
+        $curl = new Curl();
+
+        $sturleon = $curl->get('http://www.viaggiatreno.it/viaggiatrenonew/resteasy/viaggiatreno/cercaNumeroTreno/' . $user['numTreno']);
+
+        $patreon = json_decode(json_encode($sturleon), True);
+
+        $strapazzon = $curl->get('http://www.viaggiatreno.it/viaggiatrenonew/resteasy/viaggiatreno/andamentoTreno/' . $patreon['codLocOrig'] . '/' . $patreon['numeroTreno']);
+
+        $train = json_decode(json_encode($strapazzon), True);
+
+
+        ?>
+
+        <table>
+
+        <tr>
+          <td style="padding: 15px; border: 1px solid #000;">Origine</td>
+          <td style="padding: 15px; border: 1px solid #000;">Destinazione</td>
+          <td style="padding: 15px; border: 1px solid #000;">Partenza</td>
+          <td style="padding: 15px; border: 1px solid #000;">Arrivo</td>
+        </tr>
+        <tr>
+          <td style="padding: 15px; border: 1px solid #000;"><?php echo $train['origine'] ?></td>
+          <td style="padding: 15px; border: 1px solid #000;"><?php echo $train['destinazione'] ?></td>
+          <td style="padding: 15px; border: 1px solid #000;"><?php echo gmdate('d M Y H:i:s', substr($train['fermate'][0]['partenza_teorica'], 0, 9)) ?></td>
+          <td style="padding: 15px; border: 1px solid #000;"><?php echo $train['orarioArrivoZero'] ?></td>
+        </tr>
+
       </tr>
     <?php endforeach ?>
   <?php endif ?>
+</table>
     </table>
 
     <?php if(!isset($_GET['id'])): ?>
