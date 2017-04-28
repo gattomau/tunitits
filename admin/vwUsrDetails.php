@@ -16,6 +16,9 @@ ini_set('display_errors', 1);
 
 $users = new users();
 
+// print_r($_SERVER);
+//
+// print_r(dirname($_SERVER['PHP_SELF']));
 ?>
 
 <div class="container" style="text-align: center">
@@ -78,6 +81,8 @@ $users = new users();
         <td style="padding: 15px; border: 1px solid #000;"><?php echo $user['Note'] ?></td>
         <td style="padding: 15px; border: 1px solid #000;"><?php echo $user['impPagato'] ?></td>
         <td style="padding: 15px; border: 1px solid #000;"><?php echo $user['cro'] ?></td>
+        <td style="padding: 15px; border: 1px solid #000;"><?php echo date('d M Y', strtotime($user['dataNascita']));
+        ?></td>
         <?php
 
         $curl = new Curl();
@@ -104,8 +109,8 @@ $users = new users();
         <tr>
           <td style="padding: 15px; border: 1px solid #000;"><?php echo $train['origine'] ?></td>
           <td style="padding: 15px; border: 1px solid #000;"><?php echo $train['destinazione'] ?></td>
-          <td style="padding: 15px; border: 1px solid #000;"><?php echo gmdate('d M Y H:i:s', substr($train['fermate'][0]['partenza_teorica'], 0, 9)) ?></td>
-          <td style="padding: 15px; border: 1px solid #000;"><?php echo $train['orarioArrivoZero'] ?></td>
+          <td style="padding: 15px; border: 1px solid #000;"><?php echo date('d M Y H:i:s', substr($train['fermate'][0]['partenza_teorica'], 0, 10)) ?></td>
+          <td style="padding: 15px; border: 1px solid #000;"><?php echo date('d M Y H:i:s', substr($train['orarioArrivoZero'], 0, 10)) ?></td>
         </tr>
 
       </tr>
